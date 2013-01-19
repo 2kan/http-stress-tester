@@ -8,14 +8,15 @@ Current Version
 --
 
 1.2.14
-+ Added javadoc comments
-+ Added method to gracefully terminate the program
-+ Added thread counting class to call program terminate method once all threads are complete
-* Modified thread starting logic to be more efficient
-* Made cleaner system for asking user for input
-* Split main method up into smaller methods
-* Refactored code to be more efficient
-* Changed how errors are handled slightly
+
+\+ Added javadoc comments<br>
+\+ Added method to gracefully terminate the program<br>
+\+ Added thread counting class to call program terminate method once all threads are complete<br>
+\* Modified thread starting logic to be more efficient<br>
+\* Made cleaner system for asking user for input<br>
+\* Split main method up into smaller methods<br>
+\* Refactored code to be more efficient<br>
+\* Changed how errors are handled slightly<br>
 
 
 License Info
