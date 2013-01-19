@@ -1,0 +1,16 @@
+1.2.14
+	+ Added javadoc comments
+	+ Added method to gracefully terminate the program
+	+ Added thread counting class to call program terminate method once all threads are complete
+	* Modified thread starting logic to be more efficient
+	* Made cleaner system for asking user for input
+	* Split main method up into smaller methods
+	* Refactored code to be more efficient
+	* Changed how errors are handled slightly
+
+1.2.13
+	+ Added 'purpose' parameter to entertain server admins
+	* Added better error handling when requesting/receiving
+	* Application now exits gracefully upon an error
+	* Entering invalid information on manual setup now loads defaults and continues
+	- Removed unused code
