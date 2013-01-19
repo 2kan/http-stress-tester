@@ -1,3 +1,23 @@
+HTTP Stress Tester
+--
+
+Stress tests HTTP servers by sending a large number of requests per second, using threads. Works best when used by multiple people targeting a single server.
+
+
+Current Version
+--
+
+1.2.14
++ Added javadoc comments
++ Added method to gracefully terminate the program
++ Added thread counting class to call program terminate method once all threads are complete
+* Modified thread starting logic to be more efficient
+* Made cleaner system for asking user for input
+* Split main method up into smaller methods
+* Refactored code to be more efficient
+* Changed how errors are handled slightly
+
+
 License Info
 --
 
