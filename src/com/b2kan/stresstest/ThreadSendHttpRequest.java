@@ -1,12 +1,12 @@
 package com.b2kan.stresstest;
 import java.util.HashMap;
 
-public class ThreadSendRequest implements Runnable {
+public class ThreadSendHttpRequest implements Runnable {
 	private String url, user, purpose, method;
 	private boolean complete;
 	private int reqCount;
 	
-	public ThreadSendRequest(String url, String user, String purpose, String method, int reqCount) {
+	public ThreadSendHttpRequest(String url, String user, String purpose, String method, int reqCount) {
 		this.url	= url;
 		this.user	= user;
 		this.method	= method;
